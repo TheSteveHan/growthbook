@@ -8,12 +8,14 @@ services:
   growthbook:
     image: "growthbook/growthbook:latest"
     ports:
-      - "3000:3000"
-      - "3100:3100"
+      - "4000:3000"
+      - "4100:3100"
     depends_on:
       - mongo
     environment:
       - MONGODB_URI=mongodb://root:password@mongo:27017/
+      - APP_ORIGIN=localhost:4000
+      - API_HOSt=localhost:4100
     volumes:
       - uploads:/usr/local/src/app/packages/back-end/uploads
 volumes:

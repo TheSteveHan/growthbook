@@ -8,7 +8,7 @@ image:
   repository: growthbook/growthbook
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: latest
+  tag: 1.2.0
 
 externalSecretName: growthbook-external-secret
 
@@ -18,7 +18,7 @@ port:
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -54,10 +54,10 @@ env:
 #  capacity-type: on_demand
 
 # Specify your storage class spec for persisting upload images to external file system
-#pvc:
-#  claimName: growthbook-efs-claim
-#  storageClassName: efs-sc
-#  storage: 5Gi
+pvc:
+  claimName: growthbook-claim
+  storageClassName: standard
+  storage: 2Gi
 
 volume:
   name: uploads-persistent-storage
@@ -65,13 +65,6 @@ volume:
 
 service:
   type: ClusterIP
-
-ingress:
-  name: growthbook-ingress
-  enabled: true
-  # Specify you app-origin, api-host without 'https://' prefix
-  #appOriginName: my-app-origin.io
-  #apiHostName: my-api-host.io
 
 autoscaling:
   enabled: false
@@ -87,9 +80,9 @@ autoscaling:
 #   auth:
 #     existingSecret: growthbook-external-secret
 #   metrics:
-#     enabled: true
+#     enabled: false
 #     serviceMonitor:
-#       enabled: true
+#       enabled: false
 #       namespace: sys-monitoring
 #       interval: 30s
 #       scrapeTimeout: 30s
